@@ -26,6 +26,9 @@ Routes:
         
     (POST) /jobs/run/<int:job_id>
         runs a existing job again.
+    
+    (POST) /jobs/delete/<int:job_id>
+        deletes a existing job.
         
     (GET) /jobs/<int:job_id>
         return the job object for job_id.

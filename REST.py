@@ -54,8 +54,12 @@ def createJob():
 			Payload=bytes(json.dumps({"input": inp, "code": code}), "utf-8")
 		)
 		load = json.loads(response["Payload"].read())
-		print(load)
-		#check for timeout
+
+		#verify if the job was not deleted
+		if(not(myId in jobs.keys())):
+			return json.dumps({"response": 1, "message":"The task was deleted before it finish running"}) #error
+
+		#check for timeout or another Lambda Error
 		if("errorMessage" in load.keys()):
 			jobs[myId]['status'] = 'ERROR'
 			if("Task timed out after" in load['errorMessage']):
@@ -64,6 +68,8 @@ def createJob():
 				jobs[myId]['response'] = load['errorMessage']
 			return json.dumps({"job_id":myId})
 
+
+		#handle result
 		jobs[myId]['response'] = load['stdout']
 
 		if(load['success'] == 0):
@@ -71,11 +77,9 @@ def createJob():
 		else:
 			jobs[myId]['status'] = 'ERROR'
 
-		
-		
+		#return job id as requested by the project
 		return json.dumps({"job_id":myId})
-		#return '<html><body><h1>Job Criado</h1></body></html>'
-		#return (json.dumps(load) + "\n")
+
 @app.route('/jobs/run/<int:job_id>', methods = ['POST'])#request = 
 def executeJob(job_id):
 	global jobs
@@ -101,7 +105,12 @@ def executeJob(job_id):
 	)
 	load = json.loads(response["Payload"].read())
 	#print(load)
-	#check for timeout
+
+	#verify if the job was not deleted
+	if(not(myId in jobs.keys())):
+		return json.dumps({"response": 1, "message":"The task was deleted before it finish running"}) #error
+
+	#check for timeout or another Lambda Error
 	if("errorMessage" in load.keys()):
 		jobs[myId]['status'] = 'ERROR'
 		if("Task timed out after" in load['errorMessage']):
@@ -110,6 +119,8 @@ def executeJob(job_id):
 			jobs[myId]['response'] = load['errorMessage']
 		return json.dumps({"job_id":myId})
 
+
+	#handle result
 	jobs[myId]['response'] = load['stdout']
 
 	if(load['success'] == 0):
@@ -117,7 +128,24 @@ def executeJob(job_id):
 	else:
 		jobs[myId]['status'] = 'ERROR'
 
+
 	return json.dumps({"job_id":myId})
+
+@app.route('/jobs/delete/<int:job_id>',methods = ['POST'])
+def deleteJob(job_id):
+
+	global jobs, users
+
+	if(not (job_id in jobs.keys())):
+		return json.dumps({"response": 1}) #error
+
+	job = jobs[job_id]
+	userId = job['user']
+
+	jobs.pop(job_id, None)
+	users[userId].remove(job_id)
+	
+	return json.dumps({"response": 0}) #success
 
 
 @app.route('/jobs/<int:job_id>',methods = ['GET'])
