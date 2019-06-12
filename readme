@@ -1,0 +1,24 @@
+A code Here needs to follow some guidelines
+
+Put a code you want to run in a script, I recomend the "scripts" folder in this directory
+
+The result of your job is the stdout of your code. so you want to print the values of most interest.
+
+The client creates a input object for you
+A input needs to be treated as Constants (Like DEFINE in C)
+This happens because the keys on the input object are replaced by their velues in your code in the Lambda Exec enviroment
+
+Example of input good pratice:
+
+#--------------
+myvar = int(MYVAR)
+counter = 0
+while(myvar > 0):
+    print(myvar)
+    myvar -= 1
+#--------------
+
+But this code wont work without a valid input, so make sute to configure it right on the client.
+
+
+for information on the REST Api read readmeRest

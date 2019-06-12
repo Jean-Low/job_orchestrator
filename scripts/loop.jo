@@ -1,0 +1,5 @@
+myvar = int(MYVAR)
+counter = 0
+while(myvar > 0):
+    print(myvar)
+    myvar -= 1

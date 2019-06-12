@@ -26,9 +26,14 @@ Routes:
         
     (POST) /jobs/run/<int:job_id>
         runs a existing job again.
+        eceives a JSON file for the input only
     
     (POST) /jobs/delete/<int:job_id>
         deletes a existing job.
+
+    (POST) /jobs/new/
+        creates a job but dont run it.
+        receives a JSON file with the format {"uid": string, "code": string, "input": "{}"}.
         
     (GET) /jobs/<int:job_id>
         return the job object for job_id.
