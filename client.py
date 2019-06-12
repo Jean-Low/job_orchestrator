@@ -9,7 +9,7 @@ from requests_futures.sessions import FuturesSession
 #config
 ADDRESS = "127.0.0.1:5000"              #change this for your access point
 MAX_WORKERS = 4                         #default in the futures lib is 8
-WORK_TYPE = "THREAD"                    #THREAD | PROCESS. changes what kind of parallelism is udef for async
+WORK_TYPE = "PROCESS"                    #THREAD | PROCESS. changes what kind of parallelism is udef for async
 
 username = "User"
 url = "http://" + ADDRESS + "/"
@@ -18,7 +18,7 @@ url = "http://" + ADDRESS + "/"
 #setup
 if(WORK_TYPE == "THREAD"):
     session = FuturesSession(max_workers = MAX_WORKERS)
-elif(WORK_TYPE == "THREAD"):
+elif(WORK_TYPE == "PROCESS"):
     session = FuturesSession(executor=ProcessPoolExecutor(max_workers=MAX_WORKERS),
                          session=req.Session())
 else:
