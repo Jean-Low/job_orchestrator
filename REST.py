@@ -229,3 +229,6 @@ def getUserJobs(uid):
 		ret.append( {'job_id':job['id'],'uid':job['user'],'status':job['status'],'result':job['response']} )
 	
 	return json.dumps(ret)
+
+if __name__ == '__main__':
+   app.run(host='0.0.0.0', debug=True, port=5000)

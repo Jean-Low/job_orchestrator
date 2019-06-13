@@ -7,7 +7,7 @@ from requests_futures.sessions import FuturesSession
 
 
 #config
-ADDRESS = "127.0.0.1:5000"              #change this for your access point
+ADDRESS = "18.222.233.223:5000"              #change this for your access point
 MAX_WORKERS = 4                         #default in the futures lib is 8
 WORK_TYPE = "PROCESS"                    #THREAD | PROCESS. changes what kind of parallelism is udef for async
 

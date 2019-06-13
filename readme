@@ -1,6 +1,12 @@
-This simples job orchestrator receives an python code and runs it on a Lambda Enviroment
+This simples job orchestrator receives an python code and runs it on a Lambda Enviroment.
+Use the client, The REST Api was designed to be used with it.
+
+There are some configurations on the upper part of the client scripts
+The default accesspoint is : 18.222.233.223:5000
 
 Run client.py with python3. Follow the instructions.
+
+The 
 
 
 A code for the jobs here needs to follow some guidelines
